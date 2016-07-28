@@ -12,7 +12,7 @@ namespace Scrabble
             Name = name;
         }
 
-        public void Play()
+        public virtual void Play()
         {
             throw new NotImplementedException();
         }
@@ -20,5 +20,10 @@ namespace Scrabble
         public int Points() => _points;
 
         public void AddPoints(int points) => _points += points;
+
+        public virtual bool CanPlay()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

@@ -1,6 +1,4 @@
-using System.Collections.Generic;
-using Scrabble.FeatureTests;
-using Scrabble.Infrastructure;
+using Scrabble;
 
 namespace Scrabble
 {
@@ -17,13 +15,28 @@ namespace Scrabble
 
         public void Run()
         {
-            _gameConsole.WriteLine("Welcome to scrabble");
+            PrintGameStart();
 
-            while (_rounds.HasNextRound())
+            Play();
+
+            PrintGameResult();
+        }
+
+        private void PrintGameStart()
+        {
+            _gameConsole.WriteLine("Welcome to scrabble");
+        }
+
+        private void Play()
+        {
+            while (_rounds.HasNext())
             {
                 _rounds.Play();
             }
+        }
 
+        private void PrintGameResult()
+        {
             _rounds.Players().ForEach(
                 p => _gameConsole.WriteLine($"{p.Name}: {p.Points()}"));
 

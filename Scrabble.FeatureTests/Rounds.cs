@@ -1,22 +1,29 @@
 using System.Collections.Generic;
 
-namespace Scrabble.FeatureTests
+namespace Scrabble
 {
     public class Rounds
     {
-        public virtual bool HasNextRound()
+        private readonly Players _players;
+
+        public Rounds(Players players)
         {
-            throw new System.NotImplementedException();
+            _players = players;
+        }
+
+        public virtual bool HasNext()
+        {
+            return _players.CanPlay();
         }
 
         public virtual void Play()
         {
-            throw new System.NotImplementedException();
+            _players.Play();
         }
 
         public virtual List<Player> Players()
         {
-            throw new System.NotImplementedException();
+            return _players.ToList();
         }
     }
 }

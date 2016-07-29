@@ -13,7 +13,7 @@ namespace Scrabble
 
         public virtual bool HasNext()
         {
-            return _players.CanPlay();
+            return !_players.HasEveryonePassed();
         }
 
         public virtual void Play()
@@ -21,9 +21,9 @@ namespace Scrabble
             _players.Play();
         }
 
-        public virtual List<Player> Players()
+        public virtual IList<Player> Players()
         {
-            return _players.ToList();
+            return _players.All();
         }
     }
 }

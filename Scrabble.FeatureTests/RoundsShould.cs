@@ -18,19 +18,19 @@ namespace Scrabble
         }
 
         [Test]
-        public void have_no_next_round_when_players_cannot_play()
+        public void have_no_next_round_when_everyone_has_passed()
         {
-            _players.CanPlay().Returns(false);
+            _players.HasEveryonePassed().Returns(false);
 
-            Assert.That(_rounds.HasNext(), Is.EqualTo(false));
+            Assert.That(_rounds.HasNext(), Is.EqualTo(true));
         }
 
         [Test]
-        public void have_next_round_when_players_can_play()
+        public void have_next_round_when_not_everyone_has_passed()
         {
-            _players.CanPlay().Returns(true);
+            _players.HasEveryonePassed().Returns(true);
 
-            Assert.That(_rounds.HasNext(), Is.EqualTo(true));
+            Assert.That(_rounds.HasNext(), Is.EqualTo(false));
 
         }
 
@@ -47,8 +47,8 @@ namespace Scrabble
         [Test]
         public void return_players_list()
         {
-            var expectedPlayers = new List<Player>() {};
-            _players.ToList().Returns(expectedPlayers);
+            var expectedPlayers = new List<Player>();
+            _players.All().Returns(expectedPlayers);
 
             var players = _rounds.Players();
 

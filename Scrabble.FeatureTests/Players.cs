@@ -12,9 +12,9 @@ namespace Scrabble
             _players = players;
         }
 
-        public virtual bool CanPlay()
+        public virtual bool HasEveryonePassed()
         {
-            return _players.Any(p => p.CanPlay());
+            return _players.Any(p => p.HasPassed());
         }
 
         public virtual void Play()
@@ -22,9 +22,9 @@ namespace Scrabble
             _players.ForEach(p => p.Play());
         }
 
-        public virtual List<Player> ToList()
+        public virtual IList<Player> All()
         {
-            throw new System.NotImplementedException();
+            return _players.AsReadOnly();
         }
     }
 }

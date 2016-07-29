@@ -1,3 +1,4 @@
+using System.Linq;
 using Scrabble;
 
 namespace Scrabble
@@ -37,7 +38,7 @@ namespace Scrabble
 
         private void PrintGameResult()
         {
-            _rounds.Players().ForEach(
+            _rounds.Players().ToList().ForEach(
                 p => _gameConsole.WriteLine($"{p.Name}: {p.Points()}"));
 
             _gameConsole.WriteLine("Game over");

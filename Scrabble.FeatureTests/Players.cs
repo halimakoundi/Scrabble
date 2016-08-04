@@ -12,11 +12,6 @@ namespace Scrabble
             _players = players;
         }
 
-        public virtual bool HasEveryonePassed()
-        {
-            return _players.Any(p => p.HasPassed());
-        }
-
         public virtual void Play()
         {
             _players.ForEach(p => p.Play());

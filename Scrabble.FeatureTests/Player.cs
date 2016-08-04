@@ -20,10 +20,5 @@ namespace Scrabble
         public int Points() => _points;
 
         public void AddPoints(int points) => _points += points;
-
-        public virtual bool HasPassed()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

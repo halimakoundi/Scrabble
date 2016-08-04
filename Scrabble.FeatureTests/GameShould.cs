@@ -19,7 +19,7 @@ namespace Scrabble
         public void Setup()
         {
             _gameConsole = Substitute.For<GameConsole>();
-            _rounds = Substitute.For<Rounds>(Substitute.For<Players>(new List<Player>()));
+            _rounds = Substitute.For<Rounds>(Substitute.For<Players>(new List<Player>()), Substitute.For<Board>());
             _game = new Game(_gameConsole, _rounds);
             _rounds.Players().Returns(_players);
         }
@@ -30,6 +30,16 @@ namespace Scrabble
             _game.Run();
 
             _gameConsole.Received().WriteLine("Welcome to scrabble");
+        }
+
+
+        [Test]
+        public void PlayAtLeastOneRound()
+        {
+            _rounds.HasNext().Returns(false);
+            _game.Run();
+
+            _rounds.Received().Play();
         }
 
         [Test]
@@ -49,7 +59,7 @@ namespace Scrabble
 
             _game.Run();
 
-            _rounds.Received(2).Play();
+            _rounds.Received(3).Play();
         }
 
         [Test]

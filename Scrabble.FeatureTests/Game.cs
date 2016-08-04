@@ -30,10 +30,10 @@ namespace Scrabble
 
         private void Play()
         {
-            while (_rounds.HasNext())
+            do
             {
                 _rounds.Play();
-            }
+            } while (_rounds.HasNext());
         }
 
         private void PrintGameResult()

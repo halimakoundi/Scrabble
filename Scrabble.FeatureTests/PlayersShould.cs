@@ -22,25 +22,6 @@ namespace Scrabble
         }
 
         [Test]
-        public void be_able_to_play_when_at_least_one_player_didnt_pass()
-        {
-            _player1.HasPassed().Returns(true);
-            _players = new Players(new List<Player>() {_player2, _player1});
-            _player2.HasPassed().Returns(false);
-
-            Assert.That(_players.HasEveryonePassed(), Is.EqualTo(true));
-        }
-
-        [Test]
-        public void not_be_able_to_play_when_all_players_passed()
-        {
-            _player1.HasPassed().Returns(false);
-            _player2.HasPassed().Returns(false);
-
-            Assert.That(_players.HasEveryonePassed(), Is.EqualTo(false));
-        }
-
-        [Test]
         public void tell_each_player_to_play_in_turn()
         {
             _players.Play();

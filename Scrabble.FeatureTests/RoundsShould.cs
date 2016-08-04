@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using NSubstitute;
+using NSubstitute.Core.Events;
 using NUnit.Framework;
 
 namespace Scrabble
@@ -9,31 +11,15 @@ namespace Scrabble
     {
         private Players _players;
         private Rounds _rounds;
+        private Board _board;
 
         [SetUp]
         public void SetUp()
         {
+            _board = Substitute.For<Board>();
             _players = Substitute.For<Players>(new List<Player>());
-            _rounds = new Rounds(_players);
+            _rounds = new Rounds(_players, _board);
         }
-
-        [Test]
-        public void have_no_next_round_when_everyone_has_passed()
-        {
-            _players.HasEveryonePassed().Returns(false);
-
-            Assert.That(_rounds.HasNext(), Is.EqualTo(true));
-        }
-
-        [Test]
-        public void have_next_round_when_not_everyone_has_passed()
-        {
-            _players.HasEveryonePassed().Returns(true);
-
-            Assert.That(_rounds.HasNext(), Is.EqualTo(false));
-
-        }
-
 
         [Test]
         public void tell_players_to_play()
@@ -42,7 +28,6 @@ namespace Scrabble
 
             _players.Received().Play();
         }
-
 
         [Test]
         public void return_players_list()
@@ -55,5 +40,24 @@ namespace Scrabble
             Assert.That(players, Is.EqualTo(expectedPlayers));
 
         }
+
+        [Test]
+        public void have_next_round_when_board_has_changed_during_a_round()
+        {
+            _board.HasChanged += Raise.Event<HasChangedEventHandler>();
+
+            Assert.That(_rounds.HasNext(), Is.EqualTo(true));
+        }
+
+        [Test]
+        public void have_no_next_round_when_board_has_not_changed_during_a_round()
+        {
+            _board.HasChanged += Raise.Event<HasChangedEventHandler>();
+
+            _rounds.Play();
+
+            Assert.That(_rounds.HasNext(), Is.EqualTo(false));
+        }
     }
+
 }

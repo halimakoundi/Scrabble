@@ -11,8 +11,8 @@ namespace Scrabble
         private Rounds _rounds;
         private Game _game;
 
-        static readonly Player Player1 = new Player("Player 1");
-        static readonly Player Player2 = new Player("Player 2");
+        static readonly Player Player1 = new Player("Player 1", null);
+        static readonly Player Player2 = new Player("Player 2", null);
         readonly List<Player> _players = new List<Player> { Player1, Player2 };
 
         [SetUp]
@@ -31,7 +31,6 @@ namespace Scrabble
 
             _gameConsole.Received().WriteLine("Welcome to scrabble");
         }
-
 
         [Test]
         public void PlayAtLeastOneRound()

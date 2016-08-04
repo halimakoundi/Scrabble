@@ -5,5 +5,10 @@ namespace Scrabble
     public class Board
     {
         public virtual event HasChangedEventHandler HasChanged;
+
+        public virtual int Place(Turn turn)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

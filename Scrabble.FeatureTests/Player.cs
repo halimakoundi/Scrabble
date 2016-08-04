@@ -4,17 +4,19 @@ namespace Scrabble
 {
     public class Player
     {
+        private readonly PlayingStrategy _playingStrategy;
         public string Name { get; }
         private int _points;
 
-        public Player(string name)
+        public Player(string name, PlayingStrategy playingStrategy)
         {
+            _playingStrategy = playingStrategy;
             Name = name;
         }
 
         public virtual void Play()
         {
-            throw new NotImplementedException();
+            _playingStrategy.Play();
         }
 
         public int Points() => _points;

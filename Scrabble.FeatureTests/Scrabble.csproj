@@ -58,12 +58,19 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameConsole.cs" />
     <Compile Include="GameShould.cs" />
+    <Compile Include="HumanPlayingStrategy.cs" />
+    <Compile Include="HumanPlayingStrategyShould.cs" />
+    <Compile Include="InvalidTurnException.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Players.cs" />
+    <Compile Include="PlayerShould.cs" />
     <Compile Include="PlayersShould.cs" />
+    <Compile Include="PlayingStrategy.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rounds.cs" />
     <Compile Include="RoundsShould.cs" />
+    <Compile Include="Turn.cs" />
+    <Compile Include="TurnReader.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

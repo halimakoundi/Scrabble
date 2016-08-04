@@ -15,8 +15,8 @@ namespace Scrabble
         [SetUp]
         public void SetUp()
         {
-            _player1 = Substitute.For<Player>("");
-            _player2 = Substitute.For<Player>("");
+            _player1 = Substitute.For<Player>("", null);
+            _player2 = Substitute.For<Player>("", null);
             _allPlayers = new List<Player> {_player1, _player2};
             _players = new Players(_allPlayers);
         }

@@ -6,5 +6,10 @@ namespace Scrabble
         {
             throw new System.NotImplementedException();
         }
+
+        public virtual string ReadLine()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

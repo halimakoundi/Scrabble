@@ -10,25 +10,29 @@ namespace Scrabble
         private HumanPlayingStrategy _humanPlayingSrategy;
         private TurnReader _turnReader;
         private Board _board;
+        private GameConsole _console;
+        private InvalidTurnException _invalidTurnException;
 
         [SetUp]
         public void SetUp()
         {
+            _console = Substitute.For<GameConsole>();
             _turnReader = Substitute.For<TurnReader>();
-            _board = Substitute.For<Board>();
-            _humanPlayingSrategy = new HumanPlayingStrategy(_turnReader, _board);
+            _board = Substitute.For<Board>(new Rules(), new Grid());
+            _humanPlayingSrategy = new HumanPlayingStrategy(_turnReader, _board, _console);
+            _invalidTurnException = new InvalidTurnException("message");
         }
 
         [Test]
-        public void place_a_new_turn_when_placed_turn_is_invalid()
+        public void place_a_new_turn_until_placed_turn_is_valid()
         {
             Turn invalidTurn = new Turn();
             Turn validTurn = new Turn();
 
-            _turnReader.Read().Returns(invalidTurn, validTurn);
-
+            _turnReader.Read().Returns(invalidTurn, invalidTurn, validTurn);
             _board.Place(invalidTurn)
-                .Returns(x => { throw new InvalidTurnException(); });
+                .Returns(x => { throw _invalidTurnException; });
+
             _humanPlayingSrategy.Play();
 
             Received.InOrder(() =>
@@ -36,10 +40,30 @@ namespace Scrabble
                 _turnReader.Read();
                 Assert.Throws<InvalidTurnException>(() => _board.Received().Place(invalidTurn));
                 _turnReader.Read();
+                Assert.Throws<InvalidTurnException>(() => _board.Received().Place(invalidTurn));
+                _turnReader.Read();
                 _board.Place(validTurn);
             });
         }
 
+
+        [Test]
+        public void print_invalid_turn_message_to_console_if_place_invalid_turn()
+        {
+            Turn invalidTurn = new Turn();
+            Turn validTurn = new Turn();
+
+            _turnReader.Read().Returns(invalidTurn, validTurn);
+            _board.Place(invalidTurn)
+                .Returns(x =>
+                {
+                    throw _invalidTurnException;
+                });
+
+            _humanPlayingSrategy.Play();
+
+            _console.Received().WriteLine(_invalidTurnException.Message);
+        }
 
         [Test]
         public void return_turn_points()

@@ -19,7 +19,9 @@ namespace Scrabble
         public void Setup()
         {
             _gameConsole = Substitute.For<GameConsole>();
-            _rounds = Substitute.For<Rounds>(Substitute.For<Players>(new List<Player>()), Substitute.For<Board>());
+            _rounds = Substitute.For<Rounds>(
+                Substitute.For<Players>(new List<Player>()), 
+                Substitute.For<Board>(new Rules(), new Grid()));
             _game = new Game(_gameConsole, _rounds);
             _rounds.Players().Returns(_players);
         }

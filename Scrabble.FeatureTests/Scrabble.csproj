@@ -55,6 +55,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="BoardShould.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="GameConsole.cs" />
     <Compile Include="GameShould.cs" />

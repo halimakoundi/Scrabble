@@ -16,7 +16,7 @@ namespace Scrabble
         [SetUp]
         public void SetUp()
         {
-            _board = Substitute.For<Board>();
+            _board = Substitute.For<Board>(new Rules(), new Grid());
             _players = Substitute.For<Players>(new List<Player>());
             _rounds = new Rounds(_players, _board);
         }
